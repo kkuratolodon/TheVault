@@ -16,34 +16,34 @@ class mainTest(TestCase):
     
     # testing apakah model Item menerima nama, yang valid
     def test_valid_name(self):
-        item = Album(name="Valid Name", amount=13, price = 100000, description="Desc")
+        item = Item(name="Valid Name", amount=13, price = 100000, description="Desc")
         item.full_clean()
         self.assertTrue(item)
 
-        item = Album(name="", amount=13, price = 100000, description="Desc")
+        item = Item(name="", amount=13, price = 100000, description="Desc")
         with self.assertRaises(ValidationError):
             item.full_clean()
 
     # testing apakah model Item menerima jumlah yang valid
     def test_valid_amount(self):
         # jumlah hanya boleh integer >= 0
-        item = Album(name="Valid Name", amount=0, price = 10000, description="Description")
+        item = Item(name="Valid Name", amount=0, price = 10000, description="Description")
         item.validate_amount()
         with self.assertRaises(ValidationError):
-            item = Album(name="Valid Name", amount=13.2, price = 10000, description="Description")
+            item = Item(name="Valid Name", amount=13.2, price = 10000, description="Description")
             item.validate_amount()
 
-            item = Album(name="Valid Name", amount=-5, price = 10000, description="Description")
+            item = Item(name="Valid Name", amount=-5, price = 10000, description="Description")
             item.validate_amount()
 
     # testing apakah model Item menerima harga yang valid
     def test_valid_price(self):
         # harga hanya boleh integer >= 0 kelipatan 1000 (asumsi dalam rupiah)
-        item = Album(name="Valid Name", amount=12, price = 1000, description="Description")
+        item = Item(name="Valid Name", amount=12, price = 1000, description="Description")
         item.validate_amount()
         with self.assertRaises(ValidationError):
-            item = Album(name="Valid Name", amount=12, price = 1000.0, description="Description")
+            item = Item(name="Valid Name", amount=12, price = 1000.0, description="Description")
             item.validate_price()
 
-            item = Album(name="Valid Name", amount=12, price = -1000, description="Description")
+            item = Item(name="Valid Name", amount=12, price = -1000, description="Description")
             item.validate_price()

@@ -2,7 +2,7 @@ from django.db import models
 from django.forms import ValidationError
 
 
-class Album(models.Model):
+class Item(models.Model):
     name = models.CharField(max_length=255)
     amount = models.IntegerField()
     date_added = models.DateField(auto_now_add=True)
