@@ -109,6 +109,30 @@ Link Deploy: [Link](https://thevault.adaptable.app/main)
     8. Menggunakan start command `python manage.py migrate && gunicorn TheVault.wsgi`
     9. Pilih nama app (TheVault) dan start deploy.
 
-## Buatlah bagan yang berisi request client ke web aplikasi berbasis Django beserta responnya dan jelaskan pada bagan tersebut kaitan antara urls.py, views.py, models.py, dan berkas html.
-## Jelaskan mengapa kita menggunakan virtual environment? Apakah kita tetap dapat membuat aplikasi web berbasis Django tanpa menggunakan virtual environment?
-## Jelaskan apakah itu MVC, MVT, MVVM dan perbedaan dari ketiganya.
+## 2. Buatlah bagan yang berisi request client ke web aplikasi berbasis Django beserta responnya dan jelaskan pada bagan tersebut kaitan antara urls.py, views.py, models.py, dan berkas html.
+## 3. Jelaskan mengapa kita menggunakan virtual environment? Apakah kita tetap dapat membuat aplikasi web berbasis Django tanpa menggunakan virtual environment?
+- Mengapa kita menggunakan virtual environment?
+Virtual environment (venv) digunakan untuk mengisolasi proyek Python, memungkinkan manajemen dependensi yang terkendali, memfasilitasi pemeliharaan proyek, dan memastikan keseragaman lingkungan pengembangan tim. Dengan venv, kita dapat menghindari konflik dependensi antar-proyek, memisahkan lingkungan proyek dari Python global, dan menjaga proyek kita tetap bersih dan teratur. 
+- Apakah kita tetap dapat membuat aplikasi web berbasis Django tanpa menggunakan virtual environment?
+Meskipun aplikasi Django dapat dibuat tanpa menggunakan virtual environment, sangat dianjurkan untuk memanfaatkannya dalam proses pengembangan aplikasi web berbasis Django. Hal ini akan memberikan manfaat dalam hal manajemen dependensi yang lebih efisien, pembatasan pengaruh proyek terhadap perubahan di instalasi Python global, serta menjaga keselamatan dan kerapihan proyek. Penggunaan virtual environment adalah praktik yang baik dalam pengembangan Python dan akan mendukung kelancaran serta ketertiban dalam pengembangan proyek Anda.
+## 4. Jelaskan apakah itu MVC, MVT, MVVM dan perbedaan dari ketiganya.
+1. MVC (Model-View-Controller):
+
+- Model: Bertanggung jawab untuk mengelola data dan aturan bisnis.
+- View: Bertanggung jawab untuk menampilkan data kepada pengguna.
+- Controller: Bertanggung jawab untuk mengendalikan aliran aplikasi dan berfungsi sebagai penghubung antara Model dan View.
+Perbedaan utama dengan Django adalah bahwa Django mengikuti pola MVT (Model-View-Template), yang menggunakan Template (T) untuk mengontrol tampilan, sedangkan dalam MVC, View berperan dalam mengontrol tampilan.
+
+2. MVT (Model-View-Template):
+
+- Model: Sama seperti dalam MVC, mengelola data dan aturan bisnis.
+- View: Bertanggung jawab untuk menampilkan data kepada pengguna, mengontrol aliran aplikasi, dan berkomunikasi dengan Model.
+- Template: Bertanggung jawab untuk merender tampilan dan mendefinisikan bagaimana data akan ditampilkan.
+MVT adalah pola yang diterapkan secara khusus dalam Django, yang menggantikan "Controller" dengan "View" dan menambahkan komponen "Template" yang khusus untuk merender tampilan.
+
+3. MVVM (Model-View-ViewModel):
+
+- Model: Bertanggung jawab untuk mengelola data dan aturan bisnis, sama seperti dalam pola lainnya.
+- View: Menampilkan data dan berinteraksi dengan pengguna, tetapi memiliki hubungan yang lebih erat dengan ViewModel.
+- ViewModel: Bertanggung jawab untuk mengatur tampilan, berfungsi sebagai perantara antara Model dan View, dan mengelola logika tampilan.
+MVVM adalah pola yang sering digunakan dalam pengembangan aplikasi berbasis framework JavaScript seperti Angular atau Vue.js. Ini memisahkan peran pengelolaan tampilan dari View, dengan ViewModel bertanggung jawab atas tugas ini.
