@@ -124,4 +124,4 @@ STATIC_URL = 'static/'
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 # Adding CSRF Trusted Origins
-CSRF_TRUSTED_ORIGINS = ["https://thevault.adaptable.app"]
+CSRF_TRUSTED_ORIGINS = ["https://the-vault.adaptable.app"]
