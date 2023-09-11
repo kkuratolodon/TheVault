@@ -28,22 +28,20 @@ class mainTest(TestCase):
     def test_valid_amount(self):
         # jumlah hanya boleh integer >= 0
         item = Item(name="Valid Name", amount=0, price = 10000, description="Description")
-        item.validate_amount()
+        item.full_clean()
         with self.assertRaises(ValidationError):
             item = Item(name="Valid Name", amount=13.2, price = 10000, description="Description")
-            item.validate_amount()
-
+            item.full_clean()
             item = Item(name="Valid Name", amount=-5, price = 10000, description="Description")
-            item.validate_amount()
+            item.full_clean()
 
     # testing apakah model Item menerima harga yang valid
     def test_valid_price(self):
         # harga hanya boleh integer >= 0 kelipatan 1000 (asumsi dalam rupiah)
         item = Item(name="Valid Name", amount=12, price = 1000, description="Description")
-        item.validate_amount()
+        item.full_clean()
         with self.assertRaises(ValidationError):
             item = Item(name="Valid Name", amount=12, price = 1000.0, description="Description")
-            item.validate_price()
-
+            item.full_clean()
             item = Item(name="Valid Name", amount=12, price = -1000, description="Description")
-            item.validate_price()
+            item.full_clean()

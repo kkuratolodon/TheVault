@@ -1,6 +1,32 @@
-<h1>{{ app_name }}</h1>
+<head>
+    <title>Daftar Item</title>
+    <style>
+        body {
+            background-color: #541e5c; /* Replace #FF0000 with your desired color */
+            color: white;
+        }
+    </style>
+</head>
+<body>
+    <h1>{{ app_name }}</h1>
 
-<h5>Name: </h5>
-<p>{{ name }}<p>
-<h5>Class: </h5>
-<p>{{ class }}<p>
+    <h3>Name: </h3>
+    <p>{{ name }}<p>
+    <h3>Class: </h3>
+    <p>{{ class }}<p>
+
+    <h1>Daftar Item:</h1>
+    <ul>
+        {% for item in items %}
+            <li>
+                <h2>{{ item.name }}</h2>
+                <p>Sisa Stok&emsp;&nbsp;: {{ item.amount }}</p>
+                <p>Harga&emsp;&emsp;&ensp;: Rp{{ item.price }}</p>
+                <p>Deksripsi&emsp;: {{ item.description }}</p>
+            </li>
+        {% empty %}
+            <p>Tidak ada item yang tersedia.</p>
+        {% endfor %}
+    </ul>
+</body>
+</html>
