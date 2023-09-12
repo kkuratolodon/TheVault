@@ -1,8 +1,7 @@
 # Tugas 2 PBP 
 Muhammad Irfan Firmansyah (2206816102) \
 PBP-B \
-Link Deploy: [Link](https://thevault.adaptable.app/main)
-
+Link Deploy: [Link](https://the-vault.adaptable.app/main)
 ## 1. Checklist Tugas
 - [x] **Membuat sebuah proyek Django baru.**
     1. Membuat direktori baru dan menginisialisasi git dengan `git init`
@@ -110,6 +109,7 @@ Link Deploy: [Link](https://thevault.adaptable.app/main)
     9. Pilih nama app (TheVault) dan start deploy.
 
 ## 2. Buatlah bagan yang berisi request client ke web aplikasi berbasis Django beserta responnya dan jelaskan pada bagan tersebut kaitan antara urls.py, views.py, models.py, dan berkas html.
+![Bagan Django](https://media.discordapp.net/attachments/1054028087551078452/1151072455620829244/image.png?width=1310&height=372)
 ## 3. Jelaskan mengapa kita menggunakan virtual environment? Apakah kita tetap dapat membuat aplikasi web berbasis Django tanpa menggunakan virtual environment?
 - Mengapa kita menggunakan virtual environment?
 Virtual environment (venv) digunakan untuk mengisolasi proyek Python, memungkinkan manajemen dependensi yang terkendali, memfasilitasi pemeliharaan proyek, dan memastikan keseragaman lingkungan pengembangan tim. Dengan venv, kita dapat menghindari konflik dependensi antar-proyek, memisahkan lingkungan proyek dari Python global, dan menjaga proyek kita tetap bersih dan teratur. 
