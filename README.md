@@ -106,7 +106,7 @@ Link Deploy: [Link](https://the-vault.adaptable.app/main)
     6. Pilih PostgreSQL
     7. Pilih versi python yang sesuai di ven (3.11)
     8. Menggunakan start command `python manage.py migrate && gunicorn TheVault.wsgi`
-    9. Pilih nama app (TheVault) dan start deploy.
+    9. Pilih nama app (The-Vault) dan start deploy.
 
 ## 2. Buatlah bagan yang berisi request client ke web aplikasi berbasis Django beserta responnya dan jelaskan pada bagan tersebut kaitan antara urls.py, views.py, models.py, dan berkas html.
 ![Bagan Django](https://media.discordapp.net/attachments/1054028087551078452/1151072455620829244/image.png?width=1310&height=372)
