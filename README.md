@@ -146,3 +146,5 @@ MVT adalah pola yang diterapkan secara khusus dalam Django, yang menggantikan "C
 - View: Menampilkan data dan berinteraksi dengan pengguna, tetapi memiliki hubungan yang lebih erat dengan ViewModel.
 - ViewModel: Bertanggung jawab untuk mengatur tampilan, berfungsi sebagai perantara antara Model dan View, dan mengelola logika tampilan.
 MVVM adalah pola yang sering digunakan dalam pengembangan aplikasi berbasis framework JavaScript seperti Angular atau Vue.js. Ini memisahkan peran pengelolaan tampilan dari View, dengan ViewModel bertanggung jawab atas tugas ini.
+
+Perbedaan utama di antara ketiga pola desain ini terletak pada cara mereka mengatur tanggung jawab dalam sebuah aplikasi. MVC lebih berfokus pada mengatur alur aplikasi, MVT menekankan pada presentasi data dengan menggunakan template, sedangkan MVVM memperkenalkan ViewModel untuk mempermudah pengikatan data dua arah. Keputusan yang tepat dalam memilih salah satu dari ketiganya bergantung pada jenis aplikasi yang tengah Anda kembangkan serta preferensi pribadi dalam pengembangan perangkat lunak.
