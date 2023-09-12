@@ -98,15 +98,16 @@ Link Deploy: [Link](https://the-vault.adaptable.app/main)
     ```
     `show_main` adalah fungsi di `views.py` yang digunakan sebagai tampilan yang akan ditampilkan ketika URL terkait diakses.
 - [x] **Melakukan deployment ke Adaptable**
-    1. Membuka https://Adaptable.io dan sign in menggunakan akun github
-    2. Klik `App Dashboard` dan klik `+ NEW APP`
-    3. Pilih `Connect an Existing Repository` dan pilih repository dari projek ini (TheVault)
-    4. Pilih branch yang diinginkan (main)
-    5. Pilih `Python App Template`
-    6. Pilih PostgreSQL
-    7. Pilih versi python yang sesuai di ven (3.11)
-    8. Menggunakan start command `python manage.py migrate && gunicorn TheVault.wsgi`
-    9. Pilih nama app (The-Vault) dan start deploy.
+    1. Melakukan add, commit, push dari repository lokal ke github
+    2. Membuka https://Adaptable.io dan sign in menggunakan akun github
+    3. Klik `App Dashboard` dan klik `+ NEW APP`
+    4. Pilih `Connect an Existing Repository` dan pilih repository dari projek ini (TheVault)
+    5. Pilih branch yang diinginkan (main)
+    6. Pilih `Python App Template`
+    7. Pilih PostgreSQL
+    8. Pilih versi python yang sesuai di ven (3.11)
+    9. Menggunakan start command `python manage.py migrate && gunicorn TheVault.wsgi`
+    10. Pilih nama app (The-Vault) dan start deploy.
 
 ## 2. Buatlah bagan yang berisi request client ke web aplikasi berbasis Django beserta responnya dan jelaskan pada bagan tersebut kaitan antara urls.py, views.py, models.py, dan berkas html.
 ![Bagan Django](https://media.discordapp.net/attachments/1054028087551078452/1151072455620829244/image.png?width=1310&height=372)
