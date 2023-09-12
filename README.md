@@ -110,6 +110,16 @@ Link Deploy: [Link](https://the-vault.adaptable.app/main)
 
 ## 2. Buatlah bagan yang berisi request client ke web aplikasi berbasis Django beserta responnya dan jelaskan pada bagan tersebut kaitan antara urls.py, views.py, models.py, dan berkas html.
 ![Bagan Django](https://media.discordapp.net/attachments/1054028087551078452/1151072455620829244/image.png?width=1310&height=372)
+1. User : User adalah orang yang mengakses aplikasi web, misalnya dengan membuka situs web tersebut di browser.
+2. URL Configuration (urls.py): Ketika user meminta halaman atau melakukan tindakan tertentu di situs web, permintaan mereka akan pertama-tama mencocokkan URL yang diminta dengan pola URL yang telah ditentukan di dalam berkas urls.py. Ini adalah cara Django tahu apa yang harus dilakukan dengan permintaan tersebut.
+3. Views (Tampilan): Setelah URL cocok dengan pola yang ada di urls.py, permintaan akan diarahkan ke "tampilan" yang sesuai. Views adalah bagian dari aplikasi yang mengatur logika tampilan. Tampilan ini bisa mengambil data dari model (jika diperlukan) dan melakukan berbagai tugas lainnya.
+4. Models (Model-data): Model adalah cara menggambarkan dan berinteraksi dengan data dalam aplikasi. Models mencakup struktur database dan cara mengambil atau menyimpan data. Tampilan (views) dapat berkomunikasi dengan model untuk mengelola data.
+5. Database: Database adalah tempat di mana data dari aplikasi disimpan secara permanen. Tampilan (views) dapat mengakses dan memanipulasi data di dalam database menggunakan model-data yang telah didefinisikan.
+6. Template: Setelah tampilan selesai memproses data atau logika bisnis, mereka akan menggunakan template HTML. Template ini berisi kode HTML yang akan digunakan untuk menghasilkan halaman web yang dilihat oleh pengguna. Data yang diperoleh dari tampilan akan dimasukkan ke dalam template ini.
+7. Views (Kembali): Setelah template diisi dengan data, tampilan akan mengembalikan halaman HTML yang telah selesai dibuat kepada pengguna. Pengguna akan melihat halaman ini di peramban mereka sebagai respons atas permintaan awal.
+
+Dengan kata lain, alur ini menjelaskan bagaimana permintaan dari pengguna dikendalikan oleh aplikasi web Django, melalui URL, tampilan, model, dan database, hingga akhirnya menghasilkan halaman web yang diberikan kepada pengguna sebagai respons.
+
 ## 3. Jelaskan mengapa kita menggunakan virtual environment? Apakah kita tetap dapat membuat aplikasi web berbasis Django tanpa menggunakan virtual environment?
 - Mengapa kita menggunakan virtual environment?
 Virtual environment (venv) digunakan untuk mengisolasi proyek Python, memungkinkan manajemen dependensi yang terkendali, memfasilitasi pemeliharaan proyek, dan memastikan keseragaman lingkungan pengembangan tim. Dengan venv, kita dapat menghindari konflik dependensi antar-proyek, memisahkan lingkungan proyek dari Python global, dan menjaga proyek kita tetap bersih dan teratur. 
