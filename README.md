@@ -1,7 +1,7 @@
 # Tugas 3 PBP 
 Muhammad Irfan Firmansyah (2206816102) \
 PBP-B \
-![image](https://media.discordapp.net/attachments/1049115719306051644/1151515382419566632/realistic-cat.gif?width=450&height=450)
+![tes](https://cdn.discordapp.com/attachments/1049115719306051644/1151515266593857607/realistic-cat.gif)
 
 ## 1. Checklist Tugas
 - [x] **Membuat sebuah proyek Django baru.**
