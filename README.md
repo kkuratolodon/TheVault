@@ -1,7 +1,8 @@
-# Tugas 2 PBP 
+# Tugas 3 PBP 
 Muhammad Irfan Firmansyah (2206816102) \
 PBP-B \
-Link Deploy: [Link](https://the-vault.adaptable.app/main)
+![image](https://github.com/kkuratolodon/TheVault/assets/113555728/9d5f6558-e3f7-4604-9554-2dc75fd0edce)
+
 ## 1. Checklist Tugas
 - [x] **Membuat sebuah proyek Django baru.**
     1. Membuat direktori baru dan menginisialisasi git dengan `git init`
