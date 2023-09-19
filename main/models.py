@@ -3,18 +3,19 @@ from django.forms import ValidationError
 
 
 def validate_amount(value):
-    if value < 0:
-        raise ValidationError('Hanya Menerima Jumlah NonNegatif')
+    if value <= 0:
+        raise ValidationError('Hanya Menerima Jumlah Bulat Positif!')
         
-def validate_price(value):
-    if value % 1000 != 0 or value <= 0:
-        raise ValidationError('Hanya Menerima Harga Kelipatan 1000!')
+def validate_rating(value):
+    if value < 0 or value > 10:
+        raise ValidationError('Hanya Menerima Rating dalam skala 0-10!')
 
 class Item(models.Model):
     name = models.CharField(max_length=255)
-    amount = models.IntegerField(validators=[validate_amount])
+    artist = models.CharField(max_length=255)
+    amount = models.IntegerField(validators=[validate_amount], default=1)
     date_added = models.DateField(auto_now_add=True)
-    price = models.IntegerField(validators=[validate_price])
+    rating = models.FloatField(validators=[validate_rating], default=0.0)
     description = models.TextField()
 
     

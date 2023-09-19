@@ -1,7 +1,7 @@
 from django.forms import ValidationError
 from django.test import Client, TestCase
 
-from .models import *
+from main.models import *
 
 
 class mainTest(TestCase):
@@ -16,32 +16,32 @@ class mainTest(TestCase):
     
     # testing apakah model Item menerima nama, yang valid
     def test_valid_name(self):
-        item = Item(name="Valid Name", amount=13, price = 100000, description="Desc")
+        item = Item(name="Valid Name", artist = "Valid", amount=13, rating = 6.9, description="Desription")
         item.full_clean()
         self.assertTrue(item)
 
-        item = Item(name="", amount=13, price = 100000, description="Desc")
+        item = Item(name="", artist = "Valid", amount=13, rating = 6.9, description="Desription")
         with self.assertRaises(ValidationError):
             item.full_clean()
-
+    
     # testing apakah model Item menerima jumlah yang valid
     def test_valid_amount(self):
-        # jumlah hanya boleh integer >= 0
-        item = Item(name="Valid Name", amount=0, price = 10000, description="Description")
+        # jumlah hanya boleh integer >= 1
+        item = Item(name="Valid Name", artist = "Valid", amount=1, rating = 6.9, description="Description")
         item.full_clean()
         with self.assertRaises(ValidationError):
-            item = Item(name="Valid Name", amount=13.2, price = 10000, description="Description")
+            item = Item(name="Valid Name", artist = "Valid", amount=13.2, rating = 6.9, description="Description")
             item.full_clean()
-            item = Item(name="Valid Name", amount=-5, price = 10000, description="Description")
+            item = Item(name="Valid Name", artist = "Valid", amount=-5, rating = 6.9, description="Description")
             item.full_clean()
 
-    # testing apakah model Item menerima harga yang valid
-    def test_valid_price(self):
-        # harga hanya boleh integer >= 0 kelipatan 1000 (asumsi dalam rupiah)
-        item = Item(name="Valid Name", amount=12, price = 1000, description="Description")
+    # testing apakah model Item menerima rating yang valid
+    def test_valid_rating(self):
+        # rating hanya menerima float dari 0 - 10 (inklusif)
+        item = Item(name="Valid Name", artist = "Valid", amount=12, rating = 6.9, description="Description")
         item.full_clean()
         with self.assertRaises(ValidationError):
-            item = Item(name="Valid Name", amount=12, price = 1000.0, description="Description")
+            item = Item(name="Valid Name", artist = "Valid", amount=12, rating = 69, description="Description")
             item.full_clean()
-            item = Item(name="Valid Name", amount=12, price = -1000, description="Description")
+            item = Item(name="Valid Name", artist = "Valid", amount=12, rating = -69, description="Description")
             item.full_clean()

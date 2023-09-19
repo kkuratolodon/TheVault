@@ -1,32 +1,58 @@
-<head>
-    <title>Daftar Item</title>
-    <style>
-        body {
-            background-color: #541e5c; /* Replace #FF0000 with your desired color */
-            color: white;
-        }
-    </style>
-</head>
-<body>
-    <h1>{{ app_name }}</h1>
-
-    <h3>Name: </h3>
-    <p>{{ name }}<p>
-    <h3>Class: </h3>
-    <p>{{ class }}<p>
-
-    <h1>Daftar Item:</h1>
-    <ul>
-        {% for item in items %}
-            <li>
-                <h2>{{ item.name }}</h2>
-                <p>Sisa Stok&emsp;&nbsp;: {{ item.amount }}</p>
-                <p>Harga&emsp;&emsp;&ensp;: Rp{{ item.price }}</p>
-                <p>Deksripsi&emsp;: {{ item.description }}</p>
-            </li>
-        {% empty %}
-            <p>Tidak ada item yang tersedia.</p>
-        {% endfor %}
-    </ul>
-</body>
-</html>
+{% extends 'base.html' %}
+{% block content %}
+    <head>
+        <title>{{app_name}}</title>
+        <style>
+            body {
+                background-color: #541e5c; /* Replace #FF0000 with your desired color */
+                color: white;
+            }
+        </style>
+    </head>
+    <body>
+        <h1>{{app_name}}:</h1>
+        <h2>Sebuah website penyimpanan album</h2>
+        <hr>
+        <h3>Nama: {{name}}</h3>
+        <h3>Kelas: {{class}}</h3>
+        <hr>
+        {% if banyak_item == 0 %}
+            <h3 style="color: #e8c7fd;">Kamu belum menyimpan apapun pada aplikasi ini.</h3>
+        {% else %}
+            <h3 style="color: #e8c7fd;">Kamu telah menyimpan {{banyak_item}} album pada aplikasi ini:</h3>
+            <table>
+                <tr>
+                    <th style="border: 1px solid black; text-align: center;">&nbsp; Name &nbsp;</th>
+                    <th style="border: 1px solid black; text-align: center;">&nbsp; Artist &nbsp;</th>
+                    <th style="border: 1px solid black; text-align: center;">&nbsp; Rating &nbsp;</th>
+                    <th style="border: 1px solid black; text-align: center;">&nbsp; Description &nbsp;</th>
+                    <th style="border: 1px solid black; text-align: center;">&nbsp; Amount &nbsp;</th>
+                </tr>
+                {% comment %} Berikut cara memperlihatkan data produk di bawah baris ini {% endcomment %}
+            
+                {% for item in items %}
+                    <tr>
+                        <td style="border: 1px solid black; text-align: center;"> &nbsp; {{item.name}} &nbsp; </td>
+                        <td style="border: 1px solid black; text-align: center;"> &nbsp; {{item.artist}} &nbsp; </td>
+                        <td style="border: 1px solid black; text-align: center;"> &nbsp; {{item.rating}}/10 &nbsp; </td>
+                        <td style="border: 1px solid black; text-align: center;"> &nbsp; {{item.description}} &nbsp; </td>
+                        <td style="border: 1px solid black; text-align: center;"> &nbsp; {{item.amount}} &nbsp; </td>
+                        <td style="border: 1px solid black; text-align: center;">
+                            <a href="{% url 'main:delete_item' item.id %}">
+                                <button style="color: red; border: none; font-weight: bold;">
+                                    X
+                                </button>
+                            </a>
+                        </td>
+                    </tr>
+                {% endfor %}
+            </table>
+            <br>
+        {% endif %}
+        <a href="{% url 'main:create_item' %}">
+            <button style="font-weight: bold;">
+                Add New Album
+            </button>
+        </a>
+    </body>
+{% endblock content %}
