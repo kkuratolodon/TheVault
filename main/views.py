@@ -13,8 +13,9 @@ def show_main(request):
     items = Item.objects.all()
     banyak_item = 0
 
-    # Membuat harga item dipisahkan dengan titik tiap 3 digit
+    # Loop setiap item
     for item in items:
+        # membuat rating dibuletin 2 angka di blkg koma
         item.rating = f"{item.rating:.2f}"
         # menghitung banyak item
         banyak_item += 1
