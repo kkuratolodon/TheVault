@@ -1,8 +1,199 @@
 # Tugas 3 PBP 
 Muhammad Irfan Firmansyah (2206816102) \
 PBP-B \
-![tes](https://cdn.discordapp.com/attachments/1049115719306051644/1151515266593857607/realistic-cat.gif)
+![We Live We Love We Lie](https://cdn.discordapp.com/attachments/1049115719306051644/1151515266593857607/realistic-cat.gif) <br>
 
+## 1. Apa perbedaan antara form POST dan form GET dalam Django?
+- Form POST: Mengirimkan data secara langsung ke file lain tanpa menampilkan data tersebut pada URL. Biasanya, metode ini digunakan untuk mengirimkan data yang penting atau rahasia, seperti password. Dalam Django, form login dikembalikan menggunakan metode POST, di mana browser mengumpulkan data formulir, mengencodenya untuk transmisi, mengirimkannya ke server, dan kemudian menerima kembali responsnya.
+
+- Form GET: Mengirimkan data dengan cara menampilkan data atau nilai pada URL. Data yang dikirimkan akan ditampung oleh action. Dalam konteks Django, metode GET mengumpulkan data yang dikirimkan menjadi sebuah string dan menggunakan ini untuk membuat URL.
+
+## 2. Apa perbedaan utama antara XML, JSON, dan HTML dalam konteks pengiriman data?
+
+- XML adalah bahasa markup yang menyediakan aturan untuk menentukan data apa pun. XML menggunakan tanda untuk membedakan antara atribut data dan data aktual. XML mendukung pertukaran informasi antara sistem komputer, seperti situs web, basis data, dan aplikasi pihak ketiga. XML juga memiliki kemampuan menampilkan data karena merupakan bahasa markup.
+
+- JSON adalah format pertukaran data terbuka yang dapat dibaca baik oleh manusia maupun mesin. JSON bersifat independen dari setiap bahasa pemrograman dan merupakan output API umum dalam berbagai aplikasi. JSON lebih cepat untuk membaca dan menulis karena dapat diuraikan lebih mudah daripada XML. JSON juga lebih ringkas dan memiliki ukuran file yang lebih kecil, yang memungkinkan transmisi data yang lebih cepat.
+
+- HTML adalah bahasa markup yang digunakan untuk menentukan struktur dan presentasi konten di web. HTML memiliki tanda standar yang harus digunakan semua orang. Anda tidak dapat membuat tanda Anda sendiri saat menulis HTML. HTML menitikberatkan pada bagaimana format tampilan dari data.
+
+## 3. Mengapa JSON sering digunakan dalam pertukaran data antara aplikasi web modern?
+- JSON memiliki ukuran file yang lebih kecil daripada XML, sehingga menghemat bandwidth dan waktu transmisi.
+  
+- JSON memiliki struktur kode yang lebih sederhana dan mudah dipahami oleh manusia, sehingga memudahkan development dan debugging.
+  
+- JSON memiliki kemampuan untuk menyimpan data dalam bentuk array dan nested objek, sehingga dapat menangani data yang kompleks dan dinamis.
+  
+- JSON dapat digunakan dengan berbagai bahasa pemrograman modern, seperti PHP, Python, Ruby, C++, Perl, dll.
+  
+- JSON dapat digunakan sebagai format data untuk komunikasi antara server dan aplikasi web atau sebagai format penyimpanan data sederhana.
+
+## 4. Checklist Tugas
+- [x] **Membuat input form untuk menambahkan objek model pada app sebelumnya.**
+    1. Membuat file baru di dalam directori main bernama `forms.py`, seperti berikut:
+        ```py
+        from django.forms import ModelForm
+
+        from main.models import Item
+
+        class ItemForm(ModelForm):
+            class Meta:
+                model = Item
+                fields = ["name", "artist", "amount", "rating", "description"]
+        ```
+    2. Membuka file `views.py`, kemudian menambahkan import
+        ```
+        from django.http import HttpResponseRedirect
+        from main.forms import ItemForm
+        from django.urls import reverse
+        ```
+        Kemudian membuat fungsi `create_item` dalam `views.py`
+        ```py
+        def create_item(request):
+            form = ItemForm(request.POST or None)
+
+            if form.is_valid() and request.method == "POST":
+                form.save()
+                return HttpResponseRedirect(reverse('main:show_main'))
+
+            context = {'form': form}
+            return render(request, "create_item.html", context)
+        ```
+        Kemudian menambahkan pasangan key-value items dalam dictionary `context`
+        ``` py
+        ...
+        items = Item.objects.all() # 1
+        context = {
+            'items' : items, # 2
+            'app_name' : 'The Vault',
+            'name': 'Muhammad Irfan Firmansyah',
+            'class': 'PBP-B'
+        }
+        ...
+
+        ```
+    3. Membuka `urls.py` pada direktori `main` dan import fungsi `create_item` tadi
+        ```
+        from main.views import show_main, create_product
+        ```
+        kemudian menambahkan *path url* ke dalam `urlpatterns` pada `urls.py`
+        ```py
+        path('create-product', create_product, name='create_product'),
+        ```
+    4. Membuat file HTML baru bernama `create_item.html` pada direktori `main/templates`
+        ```html
+        {% extends 'base.html' %} 
+
+        {% block content %}
+        <h1>Add New Product</h1>
+
+        <form method="POST">
+            {% csrf_token %}
+            <table>
+                {{ form.as_table }}
+                <tr>
+                    <td></td>
+                    <td>
+                        <input type="submit" value="Add New Album"/>
+                    </td>
+                </tr>
+            </table>
+        </form>
+
+        {% endblock %}
+        ```
+    5. Mengubah tampilan main.html, dengan menambahkan table dan button di bawah untuk menambahkan item
+        ```html
+        ...
+        <table>
+            <tr>
+                <th style="border: 1px solid black; text-align: center;">&nbsp; Name &nbsp;</th>
+                <th style="border: 1px solid black; text-align: center;">&nbsp; Artist &nbsp;</th>
+                <th style="border: 1px solid black; text-align: center;">&nbsp; Rating &nbsp;</th>
+                <th style="border: 1px solid black; text-align: center;">&nbsp; Description &nbsp;</th>
+                <th style="border: 1px solid black; text-align: center;">&nbsp; Amount &nbsp;</th>
+            </tr>
+        
+            {% for item in items %}
+                <tr>
+                    <td style="border: 1px solid black; text-align: center;"> &nbsp; {{item.name}} &nbsp; </td>
+                    <td style="border: 1px solid black; text-align: center;"> &nbsp; {{item.artist}} &nbsp; </td>
+                    <td style="border: 1px solid black; text-align: center;"> &nbsp; {{item.rating}}/10 &nbsp; </td>
+                    <td style="border: 1px solid black; text-align: center;"> &nbsp; {{item.description}} &nbsp; </td>
+                    <td style="border: 1px solid black; text-align: center;"> &nbsp; {{item.amount}} &nbsp; </td>
+                    <td style="border: 1px solid black; text-align: center;">
+                        <a href="{% url 'main:delete_item' item.id %}">
+                            <button style="color: red; border: none; font-weight: bold;">
+                                X
+                            </button>
+                        </a>
+                    </td>
+                </tr>
+            {% endfor %}
+        </table>
+        ...
+        <a href="{% url 'main:create_item' %}">
+            <button style="font-weight: bold;">
+                Add New Album
+            </button>
+        </a>
+        ...
+
+        ```
+- [x] Tambahkan 5 fungsi views untuk melihat objek yang sudah ditambahkan dalam format HTML, XML, JSON, XML by ID, dan JSON by ID
+    1. Membuka `views.py`, kemudian menambahkan import
+    ```py
+    from django.http import HttpResponse
+    from django.core import serializers
+    ```
+    2. membuat 5 fungsi views yang diperlukan ke dalam `views.py`
+    ```py
+    def show_html(request):
+        items = Item.objects.all().values()
+        return HttpResponse(items)
+
+    def show_xml(request):
+        data = Item.objects.all()
+        return HttpResponse(serializers.serialize("xml", data), content_type="application/xml")
+
+    def show_json(request):
+        data = Item.objects.all()
+        return HttpResponse(serializers.serialize("json", data), content_type="application/json")
+
+    def show_xml_by_id(request, id):
+        data = Item.objects.filter(pk=id)
+        return HttpResponse(serializers.serialize("xml", data), content_type="application/xml")
+
+    def show_json_by_id(request, id):
+        data = Item.objects.filter(pk=id)
+        return HttpResponse(serializers.serialize("json", data), content_type="application/json")
+    ```
+- [x] Membuat routing URL untuk masing-masing views yang telah ditambahkan pada poin 2
+    1. Membuka `urls.py` pada direktori main, dan import 5 fungsi views yang sudah dibuat tadi.
+    ```py
+    from main.views import show_html, show_json, show_json_by_id, show_xml, show_xml_by_id
+    ```
+    2. Menambahkan menambahkan 5 *path url*nya ke dalam `urlpatterns` untuk mengakses 5 fungsi tadi.
+    ```py
+    ...
+    path('html/', show_html, name='show_html'),
+    path('xml/', show_xml, name='show_xml'),
+    path('json/', show_json, name='show_json'),
+    path('xml/<int:id>/', show_xml_by_id, name='show_xml_by_id'),
+    path('json/<int:id>/', show_json_by_id, name='show_json_by_id'),
+    ...
+    ```
+## 5. Screenshot Postman
+- **HTML**
+![HTML](https://cdn.discordapp.com/attachments/1049115719306051644/1153651104266080258/image.png)
+- **XML**
+![XML](https://cdn.discordapp.com/attachments/1049115719306051644/1153651276308029440/image.png)
+- **JSON**
+![JSON](https://cdn.discordapp.com/attachments/1049115719306051644/1153651374794489896/image.png)
+- **XML/ID**
+![XML/ID](https://cdn.discordapp.com/attachments/1049115719306051644/1153651449939644517/image.png)
+- **HTML**
+![JSON/ID](https://cdn.discordapp.com/attachments/1049115719306051644/1153651513797902336/image.png)
+# Tugas 2 PBP
 ## 1. Checklist Tugas
 - [x] **Membuat sebuah proyek Django baru.**
     1. Membuat direktori baru dan menginisialisasi git dengan `git init`
