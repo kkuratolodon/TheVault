@@ -1,7 +1,7 @@
-# Tugas 2 PBP 
+# Tugas 3 PBP 
 Muhammad Irfan Firmansyah (2206816102) \
 PBP-B \
-Link Deploy: [Link](https://thevault.adaptable.app/main)
+![tes](https://cdn.discordapp.com/attachments/1049115719306051644/1151515266593857607/realistic-cat.gif)
 
 ## 1. Checklist Tugas
 - [x] **Membuat sebuah proyek Django baru.**
@@ -99,17 +99,29 @@ Link Deploy: [Link](https://thevault.adaptable.app/main)
     ```
     `show_main` adalah fungsi di `views.py` yang digunakan sebagai tampilan yang akan ditampilkan ketika URL terkait diakses.
 - [x] **Melakukan deployment ke Adaptable**
-    1. Membuka https://Adaptable.io dan sign in menggunakan akun github
-    2. Klik `App Dashboard` dan klik `+ NEW APP`
-    3. Pilih `Connect an Existing Repository` dan pilih repository dari projek ini (TheVault)
-    4. Pilih branch yang diinginkan (main)
-    5. Pilih `Python App Template`
-    6. Pilih PostgreSQL
-    7. Pilih versi python yang sesuai di ven (3.11)
-    8. Menggunakan start command `python manage.py migrate && gunicorn TheVault.wsgi`
-    9. Pilih nama app (TheVault) dan start deploy.
+    1. Melakukan add, commit, push dari repository lokal ke github
+    2. Membuka https://Adaptable.io dan sign in menggunakan akun github
+    3. Klik `App Dashboard` dan klik `+ NEW APP`
+    4. Pilih `Connect an Existing Repository` dan pilih repository dari projek ini (TheVault)
+    5. Pilih branch yang diinginkan (main)
+    6. Pilih `Python App Template`
+    7. Pilih PostgreSQL
+    8. Pilih versi python yang sesuai di ven (3.11)
+    9. Menggunakan start command `python manage.py migrate && gunicorn TheVault.wsgi`
+    10. Pilih nama app (The-Vault) dan start deploy.
 
 ## 2. Buatlah bagan yang berisi request client ke web aplikasi berbasis Django beserta responnya dan jelaskan pada bagan tersebut kaitan antara urls.py, views.py, models.py, dan berkas html.
+![Bagan Django](https://media.discordapp.net/attachments/1054028087551078452/1151072455620829244/image.png?width=1310&height=372)
+1. User : User adalah orang yang mengakses aplikasi web, misalnya dengan membuka situs web tersebut di browser.
+2. URL Configuration (urls.py): Ketika user meminta halaman atau melakukan tindakan tertentu di situs web, permintaan mereka akan pertama-tama mencocokkan URL yang diminta dengan pola URL yang telah ditentukan di dalam berkas urls.py. Ini adalah cara Django tahu apa yang harus dilakukan dengan permintaan tersebut.
+3. Views (Tampilan): Setelah URL cocok dengan pola yang ada di urls.py, permintaan akan diarahkan ke "tampilan" yang sesuai. Views adalah bagian dari aplikasi yang mengatur logika tampilan. Tampilan ini bisa mengambil data dari model (jika diperlukan) dan melakukan berbagai tugas lainnya.
+4. Models (Model-data): Model adalah cara menggambarkan dan berinteraksi dengan data dalam aplikasi. Models mencakup struktur database dan cara mengambil atau menyimpan data. Tampilan (views) dapat berkomunikasi dengan model untuk mengelola data.
+5. Database: Database adalah tempat di mana data dari aplikasi disimpan secara permanen. Tampilan (views) dapat mengakses dan memanipulasi data di dalam database menggunakan model-data yang telah didefinisikan.
+6. Template: Setelah tampilan selesai memproses data atau logika bisnis, mereka akan menggunakan template HTML. Template ini berisi kode HTML yang akan digunakan untuk menghasilkan halaman web yang dilihat oleh pengguna. Data yang diperoleh dari tampilan akan dimasukkan ke dalam template ini.
+7. Views (Kembali): Setelah template diisi dengan data, tampilan akan mengembalikan halaman HTML yang telah selesai dibuat kepada pengguna. Pengguna akan melihat halaman ini di peramban mereka sebagai respons atas permintaan awal.
+
+Dengan kata lain, alur ini menjelaskan bagaimana permintaan dari pengguna dikendalikan oleh aplikasi web Django, melalui URL, tampilan, model, dan database, hingga akhirnya menghasilkan halaman web yang diberikan kepada pengguna sebagai respons.
+
 ## 3. Jelaskan mengapa kita menggunakan virtual environment? Apakah kita tetap dapat membuat aplikasi web berbasis Django tanpa menggunakan virtual environment?
 - Mengapa kita menggunakan virtual environment?
 Virtual environment (venv) digunakan untuk mengisolasi proyek Python, memungkinkan manajemen dependensi yang terkendali, memfasilitasi pemeliharaan proyek, dan memastikan keseragaman lingkungan pengembangan tim. Dengan venv, kita dapat menghindari konflik dependensi antar-proyek, memisahkan lingkungan proyek dari Python global, dan menjaga proyek kita tetap bersih dan teratur. 
@@ -136,3 +148,5 @@ MVT adalah pola yang diterapkan secara khusus dalam Django, yang menggantikan "C
 - View: Menampilkan data dan berinteraksi dengan pengguna, tetapi memiliki hubungan yang lebih erat dengan ViewModel.
 - ViewModel: Bertanggung jawab untuk mengatur tampilan, berfungsi sebagai perantara antara Model dan View, dan mengelola logika tampilan.
 MVVM adalah pola yang sering digunakan dalam pengembangan aplikasi berbasis framework JavaScript seperti Angular atau Vue.js. Ini memisahkan peran pengelolaan tampilan dari View, dengan ViewModel bertanggung jawab atas tugas ini.
+
+Perbedaan utama di antara ketiga pola desain ini terletak pada cara mereka mengatur tanggung jawab dalam sebuah aplikasi. MVC lebih berfokus pada mengatur alur aplikasi, MVT menekankan pada presentasi data dengan menggunakan template, sedangkan MVVM memperkenalkan ViewModel untuk mempermudah pengikatan data dua arah. Keputusan yang tepat dalam memilih salah satu dari ketiganya bergantung pada jenis aplikasi yang tengah Anda kembangkan serta preferensi pribadi dalam pengembangan perangkat lunak.
