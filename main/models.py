@@ -1,3 +1,4 @@
+from django.contrib.auth.models import User
 from django.db import models
 from django.forms import ValidationError
 
@@ -11,6 +12,7 @@ def validate_rating(value):
         raise ValidationError('Hanya Menerima Rating dalam skala 0-10!')
 
 class Item(models.Model):
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
     name = models.CharField(max_length=255)
     artist = models.CharField(max_length=255)
     amount = models.IntegerField(validators=[validate_amount], default=1)
