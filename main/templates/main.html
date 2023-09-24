@@ -40,19 +40,22 @@
                     <td style="border: 1px solid black; text-align: center;"> &nbsp; {{item.description}} &nbsp; </td>
                     <td style="border: 1px solid black; text-align: center;"> &nbsp; {{item.amount}} &nbsp; </td>
                     <td style="border: 1px solid black; text-align: center;">
-                        <a href="{% url 'main:inc_item' item.id %}">
-                            <button style="color: green; height:22px; width:22px; font-weight: bold;"> + </button>
-                        </a>
+                        <form method="POST" action="{% url 'main:inc_item' item.id %}">
+                            {% csrf_token %}
+                            <button type="submit" style="color: green; height:22px; width:22px; font-weight: bold;"> + </button>
+                        </form>
                     </td>
                     <td style="border: 1px solid black; text-align: center;">
-                        <a href="{% url 'main:dec_item' item.id %}">
+                        <form method="POST" action="{% url 'main:dec_item' item.id %}">
+                            {% csrf_token %}
                             <button style="color: blue; height:22px; width:22px; font-weight: bold;"> - </button>
-                        </a>
+                        </form>
                     </td>
                     <td style="border: 1px solid black; text-align: center;">
-                        <a href="{% url 'main:del_item' item.id %}">
+                        <form method="POST" action="{% url 'main:del_item' item.id %}">
+                            {% csrf_token %}
                             <button style="color: red; height:22px; width:22px; font-weight: bold;"> x </button>
-                        </a>
+                        </form>
                     </td>
                 </tr>
             {% endfor %}

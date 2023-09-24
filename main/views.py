@@ -19,7 +19,6 @@ def show_main(request):
         return login_user(request)
 
     items = Item.objects.filter(user=request.user).order_by('name')
-    print(type(items))
     banyak_item = 0
 
     # Loop setiap item
@@ -87,27 +86,27 @@ def create_item(request):
     context = {'form': form}
     return render(request, "create_item.html", context)
 
-@login_required(login_url='/login')
 def del_item(request, id):
-    item = Item.objects.get(pk=id)
-    item.delete()
-    return HttpResponseRedirect(reverse('main:show_main'))
-
-@login_required(login_url='/login')
-def inc_item(request, id):
-    item = Item.objects.get(pk=id)
-    item.amount += 1
-    item.save()
-    return HttpResponseRedirect(reverse('main:show_main'))
-
-@login_required(login_url='/login')
-def dec_item(request, id):
-    item= Item.objects.get(pk=id)
-    if item.amount > 0:
-        item.amount -= 1
-        item.save()
-    if item.amount == 0:
+    if request.method == "POST":
+        item = Item.objects.get(pk=id)
         item.delete()
+    return HttpResponseRedirect(reverse('main:show_main'))
+
+def inc_item(request, id):
+    if request.method == "POST":
+        item = Item.objects.get(pk=id)
+        item.amount += 1
+        item.save()
+    return HttpResponseRedirect(reverse('main:show_main'))
+
+def dec_item(request, id):
+    if request.method == "POST":
+        item= Item.objects.get(pk=id)
+        if item.amount > 0:
+            item.amount -= 1
+            item.save()
+        if item.amount == 0:
+            item.delete()
     return HttpResponseRedirect(reverse('main:show_main'))
 
 @login_required(login_url='/login')
