@@ -175,45 +175,46 @@ Penggunaan cookies dalam pengembangan web dapat menjadi aman, tetapi ada risiko 
         ```
        Menambahkan path login tadi di `urls.py` di direktori main
     3. Logout <br>
-      menambahkan import dan fungsi logout di `views.py`
-      ```py
-      ...
-      from django.contrib.auth import logout
-      ...
-      def logout_user(request):
-        logout(request)
-        response = HttpResponseRedirect(reverse('main:login'))
-        response.delete_cookie('last_login')
-        return response
-      ...
-      ```
-      menambahkan button logout di `main.html` <br>
-      kemudian, menambahkan path logout di `urls.py` di direkotri main
+    menambahkan import dan fungsi logout di `views.py` 
+    ```
+    ...
+    from django.contrib.auth import logout
+    ...
+    def logout_user(request):
+      logout(request)
+      response = HttpResponseRedirect(reverse('main:login'))
+      response.delete_cookie('last_login')
+      return response
+    ...
+    ```   
+    menambahkan button logout di `main.html` <br>
+    kemudian, menambahkan path logout di `urls.py` di direkotri main
   
 - [x] Menghubungkan model Item dengan User
-      1. menambahkan import dan attribute user di models
-      ```
-      ...
-      from django.contrib.auth.models import User
-      ...
-      class Product(models.Model):
+    1. menambahkan import dan attribute user di models
+    ```
+    ...
+    from django.contrib.auth.models import User
+    ...
+    class Product(models.Model):
         user = models.ForeignKey(User, on_delete=models.CASCADE)
         ...
-      ...
-      ```
-      2. menambahkan line di fungsi `create_item` di `views.py`
-      ```
-      ..
-      def create_product(request):
-         form = ProductForm(request.POST or None)
-         if form.is_valid() and request.method == "POST":
-             product = form.save(commit=False)
-             product.user = request.user
-             product.save()
-             return HttpResponseRedirect(reverse('main:show_main'))
-      ...
-      ```
-      3. migrate modelsnya
+    ...
+    ```
+    2. menambahkan line di fungsi `create_item` di `views.py`
+  ```
+  ...
+  def create_product(request):
+     form = ProductForm(request.POST or None)
+     if form.is_valid() and request.method == "POST":
+         product = form.save(commit=False)
+         product.user = request.user
+         product.save()
+         return HttpResponseRedirect(reverse('main:show_main'))
+  ...
+      
+  ```
+    3. migrate modelsnya
 - [x] Menambahkan 2 user baru dan masing-masing punya 3 item
 ![user1](https://cdn.discordapp.com/attachments/1049115719306051644/1155821369163010120/image.png)
 ![user02](https://cdn.discordapp.com/attachments/1049115719306051644/1155821532992503808/image.png)
