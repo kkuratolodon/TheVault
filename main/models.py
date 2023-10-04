@@ -13,6 +13,7 @@ def validate_rating(value):
 
 class Item(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
+    image = models.ImageField(upload_to='albums/', default='default_album.png')
     name = models.CharField(max_length=255)
     artist = models.CharField(max_length=255)
     amount = models.IntegerField(validators=[validate_amount], default=1)

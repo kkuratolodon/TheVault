@@ -35,7 +35,7 @@ def show_main(request):
         'class': 'PBP-B',
         'username': request.user.username,
         'banyak_item': banyak_item,
-        'last_login': request.COOKIES['last_login'],
+        'last_login': request.COOKIES['last_login'][:-7],
     }
 
     return render(request, "main.html", context)
@@ -75,7 +75,7 @@ def logout_user(request):
 
 # Method membuat item baru
 def create_item(request):
-    form = ItemForm(request.POST or None)
+    form = ItemForm(request.POST or None, request.FILES)
 
     if form.is_valid() and request.method == "POST":
         product = form.save(commit=False)
@@ -83,7 +83,7 @@ def create_item(request):
         product.save()
         return HttpResponseRedirect(reverse('main:show_main'))
 
-    context = {'form': form}
+    context = {'form': form, 'username': request.user.username, 'last_login': request.COOKIES['last_login'][:-7],}
     return render(request, "create_item.html", context)
 
 def del_item(request, id):

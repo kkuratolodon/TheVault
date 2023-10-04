@@ -1,76 +1,84 @@
 {% extends 'base.html' %}
-
+{% load static %}
 {% block meta %}
     <title>{{app_name}}</title>
-    <style>
-        body {
-            background-color: #541e5c; /* Replace #FF0000 with your desired color */
-            color: white;
-        }
-    </style>
+    <link rel="stylesheet" href="{% static "styles\main_page.css" %}?{% now "U" %}">
 {% endblock meta %}
 
 {% block content %}
-    <h1>{{app_name}}:</h1>
-    <h2>Sebuah website penyimpanan album</h2>
-    <hr>
-    <h3>{{name}}</h3>
-    <h3>{{class}}</h3>
-    <hr>
-    <h3>Username: {{username}}</h3>
-    <hr>
+<nav class="navbar navbar-expand-lg bg-primary tes">
+    <div class="container-fluid">
+        <a class="navbar-brand" href="#" style="color: white;">
+            <img src="{% static "images\Vault.png" %}" alt="Logo" width="50" height="40" class="d-inline-block align-text-center">
+            The Vault
+        </a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarText" aria-controls="navbarText" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarText">
+            <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                <li class="nav-item">
+                    <a class="nav-link active" aria-current="page" href="" style="color: white;">Home</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'main:create_item' %}" style="color: white;">Add New</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'main:logout' %}" style="color: white;">Logout</a>
+                </li>
+            </ul>
+            <span class="navbar-text" style="color: white;">
+                Logged User: {{username}} (last login: {{last_login}})
+            </span>
+        </div>
+    </div>
+</nav>
+<body class="body-main">
+    <br>
     {% if banyak_item == 0 %}
-        <h3 style="color: #e8c7fd;">Kamu belum menyimpan apapun pada aplikasi ini.</h3>
-    {% else %}
-        <h3 style="color: #e8c7fd;">Kamu telah menyimpan {{banyak_item}} album pada aplikasi ini:</h3>
-        <table>
-            <tr>
-                <th style="border: 1px solid black; text-align: center;">&nbsp; Name &nbsp;</th>
-                <th style="border: 1px solid black; text-align: center;">&nbsp; Artist &nbsp;</th>
-                <th style="border: 1px solid black; text-align: center;">&nbsp; Rating &nbsp;</th>
-                <th style="border: 1px solid black; text-align: center;">&nbsp; Description &nbsp;</th>
-                <th style="border: 1px solid black; text-align: center;">&nbsp; Amount &nbsp;</th>
-            </tr>
         
-            {% for item in items %}
-                <tr>
-                    <td style="border: 1px solid black; text-align: center;"> &nbsp; {{item.name}} &nbsp; </td>
-                    <td style="border: 1px solid black; text-align: center;"> &nbsp; {{item.artist}} &nbsp; </td>
-                    <td style="border: 1px solid black; text-align: center;"> &nbsp; {{item.rating}}/10 &nbsp; </td>
-                    <td style="border: 1px solid black; text-align: center;"> &nbsp; {{item.description}} &nbsp; </td>
-                    <td style="border: 1px solid black; text-align: center;"> &nbsp; {{item.amount}} &nbsp; </td>
-                    <td style="border: 1px solid black; text-align: center;">
-                        <form method="POST" action="{% url 'main:inc_item' item.id %}">
-                            {% csrf_token %}
-                            <button style="color: green; height:22px; width:22px; font-weight: bold;"> + </button>
-                        </form>
-                    </td>
-                    <td style="border: 1px solid black; text-align: center;">
-                        <form method="POST" action="{% url 'main:dec_item' item.id %}">
-                            {% csrf_token %}
-                            <button style="color: blue; height:22px; width:22px; font-weight: bold;"> - </button>
-                        </form>
-                    </td>
-                    <td style="border: 1px solid black; text-align: center;">
-                        <form method="POST" action="{% url 'main:del_item' item.id %}">
-                            {% csrf_token %}
-                            <button style="color: red; height:22px; width:22px; font-weight: bold;"> x </button>
-                        </form>
-                    </td>
-                </tr>
-            {% endfor %}
-        </table>
+        <form method="POST" >  
+            {% csrf_token %}  
+            <table>  
+                <tr>  
+                    <td><h3 style="color: #446c84;">&emsp;Kamu belum menyimpan apapun pada aplikasi ini.&nbsp;&nbsp;</h3></td>
+                    <td><a href="{% url 'main:create_item' %}" class="btn btn-info" style="font-weight:bold;">Add New?</td>
+                </tr>  
+            </table>  
+        </form>
+    {% else %}
+        <h3 style="color: #446c84;"> &emsp;&emsp;&emsp;&emsp;Kamu telah menyimpan {{banyak_item}} album pada aplikasi ini:</h3>
         <br>
+        <div class="container">
+            <div class="row">
+                {% for item in items %}
+                    <div class="col-sm-3">
+                        <div class="card" style="width:15rem;">
+                            <img src="{{item.image.url}}" class="card-img-top" alt="{{item.name}}" style="width: 15rem; height; 15rem; object-fit: cover;">
+                            <div class="card-body {% if forloop.last %}last-item{% endif %}">
+                                <h5 class="card-title">{{item.name}}</h5>
+                                <h6 class="card-subtitle mb-2 text-muted">{{item.artist}}</h6>
+                                <p class="card-text">{{item.description}}</p>
+                                <p class="card-text">Rating: {{item.rating}}/10</p>
+                                <p class="card-text">Amount: {{item.amount}}</p>
+                                <form method="POST" action="{% url 'main:inc_item' item.id %}">
+                                    {% csrf_token %}
+                                    <button style="color: green;">Increase</button>
+                                </form>
+                                <form method="POST" action="{% url 'main:dec_item' item.id %}">
+                                    {% csrf_token %}
+                                    <button style="color: blue;">Decrease</button>
+                                </form>
+                                <form method="POST" action="{% url 'main:del_item' item.id %}">
+                                    {% csrf_token %}
+                                    <button style="color: red;">Delete</button>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                {% endfor %}
+            </div>
+        </div>
     {% endif %}
-    <a href="{% url 'main:create_item' %}">
-        <button style="font-weight: bold;">
-            Add New Album
-        </button>
-    </a>
-    <a href="{% url 'main:logout' %}">
-        <button style="font-weight: bold;">
-            Logout
-        </button>
-    </a>
-    <h5>Sesi terakhir login: {{ last_login }}</h5>
+</body>
 {% endblock content %}
