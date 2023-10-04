@@ -1,7 +1,96 @@
-# Tugas 4 PBP 
+# Tugas 5 PBP 
 Muhammad Irfan Firmansyah (2206816102) <br>
 PBP-B <br>
 
+## 1. Jelaskan manfaat dari setiap element selector dan kapan waktu yang tepat untuk menggunakannya.
+1. **Selektor Tag** <br>
+   Selektor ini memilih elemen berdasarkan nama tag. Misalnya, `p { color: blue; }` akan memilih semua elemen `<p>` dan mengatur warna teksnya menjadi biru. Selektor tag sangat berguna jika ingin menerapkan style yang sama ke semua elemen dengan tag tertentu.
+
+2. **Selektor Class** <br>
+   Selektor ini memilih elemen berdasarkan nama class yang diberikan. Misalnya, `.pink { color: white; background: pink; padding: 5px; }` akan memilih semua elemen dengan class "pink" dan menerapkan style tersebut. Selektor class sangat berguna untuk menerapkan style yang sama ke sekelompok elemen yang memiliki class yang sama.
+
+3. **Selektor ID** <br>
+   Selektor ini hampir sama dengan class, tetapi ID bersifat unik dan hanya boleh digunakan oleh satu elemen saja. Misalnya, `#header { background: teal; color: white; height: 100px; padding: 50px; }` akan memilih elemen dengan ID "header" dan menerapkan style tersebut. Selektor ID sangat berguna untuk menerapkan style khusus ke satu elemen tertentu.
+
+4. **Selektor Atribut**
+   Selektor ini memilih elemen berdasarkan atribut. Misalnya, `input[type=text] { background: none; color: cyan; padding: 10px; border: 1px solid cyan; }` akan memilih semua elemen `<input>` yang memiliki atribut type='text' dan menerapkan gaya tersebut. Selektor atribut sangat berguna jika Anda ingin menerapkan style khusus ke elemen dengan atribut tertentu.
+
+5. **Selektor Universal**
+   Selektor ini digunakan untuk menyeleksi semua elemen pada jangkauan (scope) tertentu. Misalnya, `* { border: 1px solid grey; }` akan memberikan garis solid dengan ukuran 1px dan berwarna grey ke semua elemen. Selektor universal biasanya digunakan untuk mereset CSS.
+
+## 2. Jelaskan HTML5 Tag yang kamu ketahui.
+1. **`<html>`**: Tag ini mewakili akar (elemen tingkat atas) dari dokumen HTML, jadi juga disebut sebagai elemen root.
+2. **`<head>`**: Tag ini berisi informasi yang dapat dibaca oleh mesin (metadata) tentang dokumen, seperti judul, skrip, dan lembar gaya.
+3. **`<body>`**: Tag ini mewakili konten dari dokumen HTML.
+4. **`<title>`**: Tag ini mendefinisikan judul dokumen yang ditampilkan di bilah judul browser atau tab halaman.
+5. **`<h1>` sampai `<h6>`**: Tag ini digunakan untuk mendefinisikan heading.
+6. **`<p>`**: Tag ini digunakan untuk mendefinisikan paragraf.
+7. **`<a>`**: Tag ini digunakan untuk membuat hyperlink.
+8. **`<img>`**: Tag ini digunakan untuk menyisipkan gambar.
+9. **`<br>`**: Tag ini digunakan untuk memasukkan jeda baris.
+10. **`<table>`, `<tr>`, `<td>`**: Tag ini digunakan untuk membuat tabel.
+
+## 3. Jelaskan perbedaan antara margin dan padding.
+1. **Margin**
+   Margin adalah ruang di luar batas elemen. Margin tidak memiliki warna, dan sepenuhnya transparan. Margin digunakan untuk membuat ruang di antara elemen di halaman web. Misalnya, jika Anda ingin memiliki ruang 20px di antara dua elemen, Anda dapat menggunakan margin.
+
+2. **Padding**
+   Padding adalah ruang di antara konten elemen dan batas elemen tersebut. Padding bisa berwarna jika elemen tersebut memiliki background color. Padding digunakan untuk membuat ruang di dalam elemen. Misalnya, jika Anda ingin konten di dalam elemen memiliki ruang 20px dari batas elemen, Anda dapat menggunakan padding.
+
+## 4.  Jelaskan perbedaan antara framework CSS Tailwind dan Bootstrap. Kapan sebaiknya kita menggunakan Bootstrap daripada Tailwind, dan sebaliknya?
+1. **Bootstrap**
+   - Bootstrap adalah framework CSS yang paling banyak digunakan dan populer. 
+   - Bootstrap menyediakan komponen yang telah dirancang sebelumnya, seperti navigasi, dropdown, progress bar, dll.
+   - Bootstrap juga menyediakan sistem grid yang kuat dan responsif.
+   - Bootstrap lebih cocok untuk proyek yang membutuhkan pengembangan cepat atau untuk mereka yang baru belajar tentang pengembangan web.
+
+2. **Tailwind CSS**
+   - Tailwind adalah framework CSS utility-first yang memberikan lebih banyak kontrol kepada pengembang.
+   - Dengan Tailwind, Anda mendapatkan kelas utilitas dasar untuk membangun desain yang benar-benar kustom.
+   - Tailwind tidak menyediakan komponen yang telah dirancang sebelumnya dan mengharuskan Anda untuk merancang dari awal.
+   - Tailwind lebih cocok untuk proyek yang membutuhkan desain kustom atau untuk pengembang yang lebih berpengalaman.
+
+## 5. Checklist tugas
+- [x] Menambahkan Bootstrap ke aplikasi
+Menambahkan tag meta... di `base.html`
+```
+<head>
+    {% block meta %}
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+    {% endblock meta %}
+</head>
+```
+CSS
+```
+<head>
+    {% block meta %}
+        ...
+    {% endblock meta %}
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
+</head>
+```
+JS
+```
+<head>
+    ...
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha384-KyZXEAg3QhqLMpG8r+J4jsl5c9zdLKaUk5Ae5f5b1bw6AUn5f5v8FZJoMxm6f5cH1" crossorigin="anonymous"></script>
+</head>
+```
+Tambahan
+```
+<head>
+    ...
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js" integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.min.js" integrity="sha384-BBtl+eGJRgqQAUMxJ7pMwbEyER4l1g+O15P+16Ep7Q9Q+zqX6gSbd85u4mG4QzX+" crossorigin="anonymous"></script>
+</head>
+```
+- [x] designing
+1. Membuat direktori static di main dan di dalamnya ditaruh file css dan file image yang dibutuhkan
+2. Menghubungkan html dengan css tadi
+3. Mengubah warna background, tampilan item, dll
+
+# Tugas 4 PBP 
 ## 1. Apa itu Django UserCreationForm, dan jelaskan apa kelebihan dan kekurangannya?
 Django UserCreationForm adalah form yang digunakan untuk membuat pengguna baru yang dapat menggunakan aplikasi web. Formulir ini memiliki tiga bidang: username, password, dan konfirmasi password.
 - Kelebihan dari Django UserCreationForm adalah:
