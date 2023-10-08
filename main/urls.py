@@ -2,9 +2,7 @@ from django.conf import settings
 from django.conf.urls.static import static
 from django.urls import path
 
-from main.views import (create_item, dec_item, del_item, inc_item, login_user,
-                        logout_user, register, show_html, show_json,
-                        show_json_by_id, show_main, show_xml, show_xml_by_id)
+from main.views import *
 
 app_name = 'main'
 
@@ -22,5 +20,7 @@ urlpatterns = [
     path('register/', register, name='register'),
     path('login/', login_user, name='login'),
     path('logout/', logout_user, name='logout'),
+    path('get-product/', get_product_json, name='get_product_json'),
+    path('create-product-ajax/', add_ajax, name='add_ajax'),
 ]
 urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

@@ -21,7 +21,7 @@
                     <a class="nav-link active" aria-current="page" href="" style="color: white;">Home</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="{% url 'main:create_item' %}" style="color: white;">Add New</a>
+                    <a class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">Add New</a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link" href="{% url 'main:logout' %}" style="color: white;">Logout</a>
@@ -36,49 +36,223 @@
 <body class="body-main">
     <br>
     {% if banyak_item == 0 %}
-        
         <form method="POST" >  
             {% csrf_token %}  
             <table>  
                 <tr>  
                     <td><h3 style="color: #446c84;">&emsp;Kamu belum menyimpan apapun pada aplikasi ini.&nbsp;&nbsp;</h3></td>
-                    <td><a href="{% url 'main:create_item' %}" class="btn btn-info" style="font-weight:bold;">Add New?</td>
+                    <td><a class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">Add New?</td>
                 </tr>  
             </table>  
         </form>
     {% else %}
-        <h3 style="color: #446c84;"> &emsp;&emsp;&emsp;&emsp;Kamu telah menyimpan {{banyak_item}} album pada aplikasi ini:</h3>
+        <h3 style="color: #446c84;" id="6969"> &emsp;&emsp;&emsp;&emsp;Kamu telah menyimpan {{banyak_item}} album pada aplikasi ini:</h3>
         <br>
         <div class="container">
-            <div class="row">
-                {% for item in items %}
-                    <div class="col-sm-3">
-                        <div class="card" style="width:15rem;">
-                            <img src="{{item.image.url}}" class="card-img-top" alt="{{item.name}}" style="width: 15rem; height; 15rem; object-fit: cover;">
-                            <div class="card-body {% if forloop.last %}last-item{% endif %}">
-                                <h5 class="card-title">{{item.name}}</h5>
-                                <h6 class="card-subtitle mb-2 text-muted">{{item.artist}}</h6>
-                                <p class="card-text">{{item.description}}</p>
-                                <p class="card-text">Rating: {{item.rating}}/10</p>
-                                <p class="card-text">Amount: {{item.amount}}</p>
-                                <form method="POST" action="{% url 'main:inc_item' item.id %}">
-                                    {% csrf_token %}
-                                    <button style="color: green;">Increase</button>
-                                </form>
-                                <form method="POST" action="{% url 'main:dec_item' item.id %}">
-                                    {% csrf_token %}
-                                    <button style="color: blue;">Decrease</button>
-                                </form>
-                                <form method="POST" action="{% url 'main:del_item' item.id %}">
-                                    {% csrf_token %}
-                                    <button style="color: red;">Delete</button>
-                                </form>
-                            </div>
-                        </div>
-                    </div>
-                {% endfor %}
-            </div>
+            <div class="row" id="konz"></div>
         </div>
     {% endif %}
+    <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Add New Album</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <form id="form" onsubmit="return false;">
+                        {% csrf_token %}
+                        <div class="mb-3">
+                            <label for="name" class="form-label">Name:</label>
+                            <input type="text" class="form-control" id="name" name="name">
+                        </div>
+                        <div class="mb-3">
+                            <label for="artist" class="form-label">Artist:</label>
+                            <input type="text" class="form-control" id="artist" name="artist">
+                        </div>
+                        <div class="mb-3">
+                            <label for="amount" class="form-label">Amount:</label>
+                            <input type="number" class="form-control" id="amount" name="amount">
+                        </div>
+                        <div class="mb-3">
+                            <label for="rating" class="form-label">Rating:</label>
+                            <input type="number" class="form-control" id="rating" name="rating">
+                        </div>
+                        <div class="mb-3">
+                            <label for="description" class="form-label">Description:</label>
+                            <textarea class="form-control" id="description" name="description"></textarea>
+                        </div>
+                        <div class="mb-3">
+                            <label for="image" class="form-label">Image:</label>
+                            <input type="file" class="form-control" id="image" name="image">
+                        </div>
+                    </form>
+    
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-primary" id="button_add">Add Product</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    
 </body>
+<script>
+    const csrfToken = "{{ csrf_token }}";
+    async function getProducts() {
+        return fetch("{% url 'main:get_product_json' %}").then((res) => res.json())
+    }
+    async function refreshProducts() {
+        document.getElementById("konz").innerHTML = "";
+            
+        const products = await getProducts();
+        if(products.length <= 0){
+            document.getElementById("6969").innerHTML = "&emsp;Kamu belum menyimpan apapun pada aplikasi ini.&nbsp;&nbsp;"
+            document.getElementById("6969").innerHTML += '<a class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">Add New?</a>';
+        }
+        else document.getElementById("6969").innerHTML = "&emsp;&emsp;&emsp;&emsp;Kamu telah menyimpan " + products.length + " album pada aplikasi ini:"
+        const container = document.getElementById("konz");
+
+        products.forEach((item, index, array) => {
+            
+            const cardDiv = document.createElement("div");
+            cardDiv.classList.add("col-sm-3");
+    
+            const card = document.createElement("div");
+            card.classList.add("card");
+            card.style.width = "15rem";
+    
+            const image = document.createElement("img");
+            image.src = "/media/"+item.fields.image;
+            image.alt = item.fields.name;
+            image.classList.add("card-img-top");
+            image.style.width = "100%";
+            image.style.height = "auto";
+            image.style.objectFit = "cover";
+    
+            const cardBody = document.createElement("div");
+            cardBody.classList.add("card-body");
+            if(index === array.length - 1){
+                cardBody.classList.add("last-item");
+            }
+            
+            const title = document.createElement("h5");
+            title.classList.add("card-title");
+            title.textContent = item.fields.name;
+            
+            const artist = document.createElement("h6");
+            artist.classList.add("card-subtitle", "mb-2", "text-muted");
+            artist.textContent = item.fields.artist;
+            
+            const description = document.createElement("p");
+            description.classList.add("card-text");
+            description.textContent = item.fields.description;
+            
+            const rating = document.createElement("p");
+            rating.classList.add("card-text");
+            rating.textContent = "Rating: " + item.fields.rating + "/10";
+            
+            const amount = document.createElement("p");
+            amount.classList.add("card-text");
+            amount.textContent = "Amount: " + item.fields.amount;
+            
+            const buttonContainer = document.createElement("div");
+            
+            const increaseButton = document.createElement("button");
+            increaseButton.classList.add("btn", "btn-success");
+            increaseButton.textContent = "Increase";
+            increaseButton.addEventListener('click', async () => {
+                const response = await fetch(`/inc-item/${item.pk}/`, {
+                    method: 'POST',
+                    headers: {
+                        'Accept': 'application/json',
+                        'X-CSRFToken': csrfToken
+                    }
+                }).then(refreshProducts);
+            });
+            
+            const decreaseButton = document.createElement("button");
+            decreaseButton.classList.add("btn", "btn-warning");
+            decreaseButton.textContent = "Decrease";
+            decreaseButton.addEventListener('click', async () => {
+                const response = await fetch(`/dec-item/${item.pk}/`, {
+                    method: 'POST',
+                    headers: {
+                        'Accept': 'application/json',
+                        'X-CSRFToken': csrfToken
+                    }
+                }).then(refreshProducts);
+            });
+            
+            const deleteButton = document.createElement("button");
+            deleteButton.classList.add("btn", "btn-danger");
+            deleteButton.textContent = "Delete";
+            deleteButton.addEventListener('click', async () => {
+                const response = await fetch(`/del-item/${item.pk}/`, {
+                    method: 'POST',
+                    headers: {
+                        'Accept': 'application/json',
+                        'X-CSRFToken': csrfToken
+                    }
+                }).then(refreshProducts);
+            });
+            
+            // Append each button to its respective div
+            buttonContainer.appendChild(increaseButton);
+            buttonContainer.appendChild(document.createElement("h6"));
+            buttonContainer.appendChild(decreaseButton);
+            buttonContainer.appendChild(document.createElement("h6"));
+            buttonContainer.appendChild(deleteButton);
+            
+            cardBody.appendChild(title);
+            cardBody.appendChild(artist);
+            cardBody.appendChild(description);
+            cardBody.appendChild(rating);
+            cardBody.appendChild(amount);
+            
+            // Append the button container to the card body
+            cardBody.appendChild(buttonContainer);
+            card.appendChild(image);
+            card.appendChild(cardBody);
+    
+            cardDiv.appendChild(card);
+    
+            container.appendChild(cardDiv);
+        });
+    }
+
+    refreshProducts()
+    function addProduct() {
+        fetch("{% url 'main:add_ajax' %}", {
+            method: "POST",
+            body: new FormData(document.querySelector('#form'))
+        })
+        .then(response => {
+            if (response.status === 201) {
+                // The server returned a success response. Refresh the products.
+                document.getElementById("form").reset();
+                refreshProducts();
+                alert("Successfully added a new album!")
+                bsModal.hide()
+            } else if (response.status === 400) {
+                // The server returned a bad request response. Handle the errors.
+                response.text().then(text => {
+                    console.error(text);
+                    var errors = JSON.parse(text);
+                    // Format the errors into a readable string
+                    var errorString = '';
+                    for (var field in errors) {
+                        errorString += field + ': ' + errors[field].join(', ') + '\n';
+                    }
+                    alert(errorString);
+                });
+            }
+        });
+    
+        return false;
+    }
+    document.getElementById("button_add").onclick = addProduct;
+</script>
+
 {% endblock content %}

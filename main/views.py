@@ -1,16 +1,22 @@
 import datetime
+import json
+import os
 
 from django.contrib import messages
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.forms import UserCreationForm
 from django.core import serializers
-from django.http import HttpResponse, HttpResponseRedirect
+from django.forms import ValidationError
+from django.http import (HttpResponse, HttpResponseBadRequest,
+                         HttpResponseNotFound, HttpResponseRedirect)
 from django.shortcuts import redirect, render
 from django.urls import reverse
+from django.views.decorators.csrf import csrf_exempt
 
 from main.forms import ItemForm
 from main.models import Item
+from TheVault import settings
 
 
 @login_required(login_url='/login')
@@ -131,3 +137,31 @@ def show_xml_by_id(request, id):
 def show_json_by_id(request, id):
     data = Item.objects.filter(pk=id)
     return HttpResponse(serializers.serialize("json", data), content_type="application/json")
+
+def get_product_json(request):
+    items = Item.objects.filter(user=request.user)
+    return HttpResponse(serializers.serialize('json', items))
+
+@csrf_exempt
+def add_ajax(request):
+    if request.method == 'POST':
+        name = request.POST.get("name")
+        artist = request.POST.get("artist")
+        amount = request.POST.get("amount")
+        rating = request.POST.get("rating")
+        description = request.POST.get("description")
+        image = request.FILES.get("image")
+        user = request.user
+
+        if image is None:
+            image = os.path.join(settings.MEDIA_ROOT, 'default_album.png')
+        
+        new_product = Item(name=name, artist=artist, amount=amount, rating=rating, description=description, image=image, user=user)
+        try:
+            new_product.full_clean()
+            new_product.save()
+            return HttpResponse(b"CREATED", status=201)
+        except ValidationError as e:
+            return HttpResponseBadRequest(json.dumps(e.message_dict))
+
+    return HttpResponseNotFound()
