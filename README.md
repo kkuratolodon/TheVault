@@ -1,7 +1,132 @@
-# Tugas 5 PBP 
+# Tugas 6 PBP 
 Muhammad Irfan Firmansyah (2206816102) <br>
 PBP-B <br>
 
+## 1. Jelaskan perbedaan antara asynchronous programming dengan synchronous programming.
+**Synchronous programming** adalah suatu model pemrograman dimana tugas atau fungsi dieksekusi secara berurutan. Jadi misal terdapat 2 fungsi, artinya fungsi pertama harus selesai dijalankan sebelum fungsi kedua dapat dijalankan. Synchronous programming lebih mudah dipahami dan urutan eksekusi kodenya sangat penting. Jadi Synchronous programming biasanya digunakan dalam operasi basis data atau dalam aplikasi yang membutuhkan urutan langkah tertentu dengan baik. <br>
+
+**Asynchronous programming** adalah model dimana tugas atau fungsi dapat dieksekusi secara bersamaan atau tidak secara berurutan. Ini berarti bahwa jika terdapat 2 fungsi, maka fungsi pertama dapat dijalankan sementara fungsi kedua sedang dijalankan, dan fungsi kedua dapat dijalankan sementara fungsi pertama masih dijalankan.
+
+Jadi, Perbedaan utama antara asynchronous dan synchronous adalah bagaimana kode dieksekusi. Synchronous melakukan eksekusi secara berurutan, sementara asynchronous melakukan eksekusi secara bersamaan atau tidak berurutan. 
+
+## 2. Dalam penerapan JavaScript dan AJAX, terdapat penerapan paradigma *event-driven programming*. Jelaskan maksud dari paradigma tersebut dan sebutkan salah satu contoh penerapannya pada tugas ini. 
+Paradigma *event-driven programming* adalah cara pendekatan dalam pemrograman di mana program merespons peristiwa (events) yang terjadi secara asynchronous. Event dapat memicu tindakan tertentu atau fungsi yang disebut penangan event. Dalam konteks pengembangan web dengan teknologi AJAX, pemrograman event-driven memungkinkan pengembang untuk membuat antarmuka yang interaktif dan dinamis dengan merespons interaksi pengguna seperti klik, tekanan tombol, pengiriman formulir, atau bahkan permintaan jaringan. <br>
+
+## 3. Jelaskan penerapan `asynchronous programming` pada AJAX.<br>
+
+AJAX memungkinkan halaman web untuk memperbarui data secara asinkronus dengan mengirimkan data ke peladen di balik layar. Hal tersebut berarti bahwa kita dapat memperbarui sebagian elemen data pada halaman tanpa harus me-reload halaman secara keseluruhan. AJAX memungkinkan aplikasi web untuk berkomunikasi dengan server dan melakukan pertukaran data di belakang layar.
+
+## 4. Pada PBP kali ini, penerapan AJAX dilakukan dengan menggunakan Fetch API daripada library jQuery. Bandingkanlah kedua teknologi tersebut dan tuliskan pendapat kamu teknologi manakah yang lebih baik untuk digunakan. <br>
+
+Dalam pemilihan antara Fetch API dan jQuery untuk AJAX: <br>
+
+* Fetch API: Lebih ringan, modern, menggunakan Promises, penanganan kesalahan yang lebih baik. Cocok untuk proyek baru tanpa perlu dukungan peramban lama.
+
+* jQuery: Kompatibel dengan berbagai peramban, abstraksi kuat, plugin ekosistem yang luas. Cocok untuk proyek yang memerlukan dukungan peramban lama atau jika Anda ingin kemudahan penggunaan.
+
+Jika kita ingin yang lebih ringan dan modern, pilih Fetch API. Jika kita memerlukan dukungan luas dan kemudahan penggunaan, pilih jQuery. 
+
+## 5. Checklist tugas
+- [x] **AJAX GET** <br>
+1. Menambahkan function di `views.py`
+```py
+def get_product_json(request):
+    product_item = Product.objects.all()
+    return HttpResponse(serializers.serialize('json', product_item))
+```
+2. Menambahkannya ke path di `urls.py`
+`path('get-product/', get_product_json, name='get_product_json'),`
+3. Menambahkan script di `main.html` dan membuat function `getProducts`
+```js
+async function getProducts() {
+    return fetch("{% url 'main:get_product_json' %}").then((res) => res.json())
+```
+4. Menambahkan function `refreshItem` yang berfungsi untuk merefresh semua item cardsnya saat menambah, mengurangi, dan menghapus item, atau saat membuka linknya.
+
+- [X] **AJAX POST**
+1. Menambahkan modal untuk mengisi form menambahkan item baru.
+```
+    <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Add New Album</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <form id="form" onsubmit="return false;">
+                        {% csrf_token %}
+                        <div class="mb-3">
+                            <label for="name" class="form-label">Name:</label>
+                            <input type="text" class="form-control" id="name" name="name">
+                        </div>
+                        <div class="mb-3">
+                            <label for="artist" class="form-label">Artist:</label>
+                            <input type="text" class="form-control" id="artist" name="artist">
+                        </div>
+                        <div class="mb-3">
+                            <label for="amount" class="form-label">Amount:</label>
+                            <input type="number" class="form-control" id="amount" name="amount">
+                        </div>
+                        <div class="mb-3">
+                            <label for="rating" class="form-label">Rating:</label>
+                            <input type="number" class="form-control" id="rating" name="rating">
+                        </div>
+                        <div class="mb-3">
+                            <label for="description" class="form-label">Description:</label>
+                            <textarea class="form-control" id="description" name="description"></textarea>
+                        </div>
+                        <div class="mb-3">
+                            <label for="image" class="form-label">Image:</label>
+                            <input type="file" class="form-control" id="image" name="image">
+                        </div>
+                    </form>
+    
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-primary" id="button_add">Add Product</button>
+                </div>
+            </div>
+        </div>
+    </div>
+```
+2. Menambahkan button (di navbar) untuk membuka modalnya.
+```
+<a class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">Add New</a>
+```
+3. Membuat function `add_ajax` di `views.py` untuk mengambil isi form di modal, dan membuat object baru sesuai data di form tersebut.
+```
+@csrf_exempt
+def add_ajax(request):
+    if request.method == 'POST':
+        name = request.POST.get("name")
+        artist = request.POST.get("artist")
+        amount = request.POST.get("amount")
+        rating = request.POST.get("rating")
+        description = request.POST.get("description")
+        image = request.FILES.get("image")
+        user = request.user
+
+        if image is None:
+            image = os.path.join(settings.MEDIA_ROOT, 'default_album.png')
+        
+        new_product = Item(name=name, artist=artist, amount=amount, rating=rating, description=description, image=image, user=user)
+        try:
+            new_product.full_clean()
+            new_product.save()
+            return HttpResponse(b"CREATED", status=201)
+        except ValidationError as e:
+            return HttpResponseBadRequest(json.dumps(e.message_dict))
+
+    return HttpResponseNotFound()
+```
+4. Menambahkan pathnya ke `urls.py`<br>
+`    path('create-product-ajax/', add_ajax, name='add_ajax'),`
+- [x] **Melakukan perintah collectstatic** <br>
+menjalankan `py manage.py collectstatic` di cmd.
+
+# Tugas 5 PBP 
 ## 1. Jelaskan manfaat dari setiap element selector dan kapan waktu yang tepat untuk menggunakannya.
 1. **Selektor Tag** <br>
    Selektor ini memilih elemen berdasarkan nama tag. Misalnya, `p { color: blue; }` akan memilih semua elemen `<p>` dan mengatur warna teksnya menjadi biru. Selektor tag sangat berguna jika ingin menerapkan style yang sama ke semua elemen dengan tag tertentu.
