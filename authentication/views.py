@@ -45,6 +45,7 @@ def logout(request):
 
     try:
         auth_logout(request)
+        logged_user = None
         return JsonResponse({
             "username": username,
             "status": True,
@@ -57,5 +58,5 @@ def logout(request):
         }, status=401)
     
 def show_json(request):
-    data = Item.objects.all()
+    data = Item.objects.filter(user = logged_user)
     return HttpResponse(serializers.serialize('json', data))
