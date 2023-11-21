@@ -102,6 +102,7 @@ env/
 venv/ 
 ENV/ 
 env.bak/ 
+<<<<<<< HEAD
 venv.bak/ 
 
 # mkdocs documentation 
@@ -134,3 +135,6 @@ GitHub.sublime-settings
 !.vscode/launch.json 
 !.vscode/extensions.json 
 .history
+=======
+venv.bak/ 
+>>>>>>> 4aa183ffa154c0d1221859754680ed9d1ea910db
