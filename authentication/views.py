@@ -11,10 +11,39 @@ from main.models import *
 logged_user = None
 
 @csrf_exempt
+def register(request):
+    
+    username = request.POST.get('username')
+    password1 = request.POST.get('password1')
+    password2 = request.POST.get('password2')
+
+    if User.objects.filter(username=username).exists():
+        return JsonResponse({
+            "status": False,
+            "message": "Username sudah terdaftar."
+        }, status=400)
+
+    if password1 != password2:
+        return JsonResponse({
+            "status": False,
+            "message": "Password dan Konfirmasi Password anda berbeda!."
+        }, status=400)
+    
+    user = User.objects.create_user(username=username, password=password1)
+    user.save()
+
+    return JsonResponse({
+        "username": user.username,
+        "status": True,
+        "message": "Registrasi berhasil!"
+    }, status=201)
+
+@csrf_exempt
 def login(request):
     global logged_user
     username = request.POST['username']
     password = request.POST['password']
+    print(username, password)
     user = authenticate(username=username, password=password)
     logged_user = user
     if user is not None:
@@ -25,7 +54,6 @@ def login(request):
                 "username": user.username,
                 "status": True,
                 "message": "Login sukses!"
-                # Tambahkan data lainnya jika ingin mengirim data ke Flutter.
             }, status=200)
         else:
             return JsonResponse({
@@ -36,7 +64,7 @@ def login(request):
     else:
         return JsonResponse({
             "status": False,
-            "message": "Login gagal, periksa kembali email atau kata sandi."
+            "message": "Username atau Password anda salah."
         }, status=401)
     
 @csrf_exempt
