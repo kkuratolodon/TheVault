@@ -9,7 +9,8 @@ from django.contrib.auth.forms import UserCreationForm
 from django.core import serializers
 from django.forms import ValidationError
 from django.http import (HttpResponse, HttpResponseBadRequest,
-                         HttpResponseNotFound, HttpResponseRedirect)
+                         HttpResponseNotFound, HttpResponseRedirect,
+                         JsonResponse)
 from django.shortcuts import redirect, render
 from django.urls import reverse
 from django.views.decorators.csrf import csrf_exempt
@@ -165,3 +166,24 @@ def add_ajax(request):
             return HttpResponseBadRequest(json.dumps(e.message_dict))
 
     return HttpResponseNotFound()
+
+@csrf_exempt
+def create_product_flutter(request):
+    if request.method == 'POST':
+        
+        data = json.loads(request.body)
+
+        new_product = Item.objects.create(
+            user = request.user,
+            name = data["name"],
+            amount = int(data["amount"]),
+            image = data["image"],
+            rating = int(data["rating"]),
+            description = data["description"]
+        )
+
+        new_product.save()
+
+        return JsonResponse({"status": "success"}, status=200)
+    else:
+        return JsonResponse({"status": "error"}, status=401)
