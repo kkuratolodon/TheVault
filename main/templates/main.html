@@ -231,9 +231,9 @@
             if (response.status === 201) {
                 // The server returned a success response. Refresh the products.
                 document.getElementById("form").reset();
-                refreshProducts();
                 alert("Successfully added a new album!")
                 bsModal.hide()
+                refreshProducts()
             } else if (response.status === 400) {
                 // The server returned a bad request response. Handle the errors.
                 response.text().then(text => {
